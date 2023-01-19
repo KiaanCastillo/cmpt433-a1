@@ -3,7 +3,23 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "helpers.h"
 #include "joystick.h"
+
+void runConfigPinOnAll(void) {
+  runCommand(JOYSTICK_UP_CONFIG_PIN);
+  runCommand(JOYSTICK_DOWN_CONFIG_PIN);
+  runCommand(JOYSTICK_LEFT_CONFIG_PIN);
+  runCommand(JOYSTICK_RIGHT_CONFIG_PIN);
+}
+
+
+void configureAllPinInputs(void) {
+  
+}
+
+
+void initializeAllPins(void);
 
 bool isJoystickUpPressed(void)
 {
