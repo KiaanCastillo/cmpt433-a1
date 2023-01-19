@@ -34,6 +34,7 @@ int main()
 {
   srand(time(NULL));
   intro();
+  setAllLEDTriggersToNone();
   int fastestTime = 0;
 
   while (1)

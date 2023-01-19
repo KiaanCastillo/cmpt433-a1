@@ -21,9 +21,8 @@ typedef enum
   DOWN
 } Direction;
 
-void initializeAllLEDs(void);
+void setAllLEDTriggersToNone(void);
 Direction getRandomDirectionUpOrDown(void);
-void turnOnRandomLEDUpOrDown(void);
 
 void turnOnLEDUp(void);
 void turnOnLEDDown(void);
