@@ -46,7 +46,8 @@ static void sleepForMs(long long delayInMs)
   nanosleep(&reqDelay, (struct timespec *)NULL);
 }
 
-static int getRandomTimeInMs() {
+static int getRandomTimeInMs()
+{
   int minInMs = 500;  // 0.5s
   int maxInMs = 3000; // 3s
   int denominator = (maxInMs + 1 - minInMs);
@@ -83,11 +84,9 @@ int main()
 {
   //  1. Print a “get ready” message and turn on the middle two LEDs on BBG.
   intro();
-  initializeAllLEDs();
   turnOffAllLEDs();
   printf("Get ready!\n");
   sleepForMs(getRandomTimeInMs());
-  initializeAllLEDs();
   int direction = getRandomDirectionUpOrDown();
   turnOnLED(direction);
   if (direction == UP)
@@ -98,7 +97,7 @@ int main()
   {
     printf("Press DOWN now!\n");
   }
-  initializeAllLEDs();
+  sleepForMs(2500);
   turnOffAllLEDs();
 
   return 0;

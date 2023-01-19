@@ -54,7 +54,11 @@ void initializeAllLEDs(void)
 
 Direction getRandomDirectionUpOrDown(void)
 {
-  int direction = rand() / RAND_MAX;
+  int min = 0;
+  int max = 1;
+  int denominator = (max + 1 - min);
+  int direction = rand() % denominator;
+
   printf("%d\n", direction);
   if (direction == UP)
   {
@@ -65,6 +69,7 @@ Direction getRandomDirectionUpOrDown(void)
 
 void turnOnLEDUp(void)
 {
+  LEDUpBrightness = fopen(LED_UP_BRIGHTNESS_FILE, "w");
   int charWrittenToBrightness = fprintf(LEDUpBrightness, "1");
   if (charWrittenToBrightness <= 0)
   {
@@ -73,16 +78,19 @@ void turnOnLEDUp(void)
   }
   fclose(LEDUpBrightness);
 
-  int charWrittenToTrigger = fprintf(LEDUpTrigger, "none");
-  if (charWrittenToTrigger <= 0)
-  {
-    printf("Error turning off trigger for LED up");
-    exit(1);
-  }
+  // LEDUpTrigger = fopen(LED_UP_TRIGGER_FILE, "w");
+  // int charWrittenToTrigger = fprintf(LEDUpTrigger, "none");
+  // if (charWrittenToTrigger <= 0)
+  // {
+  //   printf("Error turning off trigger for LED up");
+  //   exit(1);
+  // }
+  // fclose(LEDUpTrigger);
 }
 
 void turnOnLEDDown(void)
 {
+  LEDDownBrightness = fopen(LED_DOWN_BRIGHTNESS_FILE, "w");
   int charWritten = fprintf(LEDDownBrightness, "1");
   if (charWritten <= 0)
   {
@@ -91,16 +99,19 @@ void turnOnLEDDown(void)
   }
   fclose(LEDDownBrightness);
 
-  int charWrittenToTrigger = fprintf(LEDDownTrigger, "none");
-  if (charWrittenToTrigger <= 0)
-  {
-    printf("Error turning off trigger for LED down");
-    exit(1);
-  }
+  // LEDDownTrigger = fopen(LED_DOWN_TRIGGER_FILE, "w");
+  // int charWrittenToTrigger = fprintf(LEDDownTrigger, "none");
+  // if (charWrittenToTrigger <= 0)
+  // {
+  //   printf("Error turning off trigger for LED down");
+  //   exit(1);
+  // }
+  // fclose(LEDDownTrigger);
 }
 
 void turnOnLEDMiddle1(void)
 {
+  LEDMiddle1Brightness = fopen(LED_MIDDLE_1_BRIGHTNESS_FILE, "w");
   int charWritten = fprintf(LEDMiddle1Brightness, "1");
   if (charWritten <= 0)
   {
@@ -109,16 +120,19 @@ void turnOnLEDMiddle1(void)
   }
   fclose(LEDMiddle1Brightness);
 
-  int charWrittenToTrigger = fprintf(LEDMiddle1Trigger, "none");
-  if (charWrittenToTrigger <= 0)
-  {
-    printf("Error turning off trigger for LED middle 1");
-    exit(1);
-  }
+  // LEDMiddle1Trigger = fopen(LED_MIDDLE_1_TRIGGER_FILE, "w");
+  // int charWrittenToTrigger = fprintf(LEDMiddle1Trigger, "none");
+  // if (charWrittenToTrigger <= 0)
+  // {
+  //   printf("Error turning off trigger for LED middle 1");
+  //   exit(1);
+  // }
+  // fclose(LEDMiddle1Trigger);
 }
 
 void turnOnLEDMiddle2(void)
 {
+  LEDMiddle2Brightness = fopen(LED_MIDDLE_2_BRIGHTNESS_FILE, "w");
   int charWritten = fprintf(LEDMiddle2Brightness, "1");
   if (charWritten <= 0)
   {
@@ -127,12 +141,14 @@ void turnOnLEDMiddle2(void)
   }
   fclose(LEDMiddle2Brightness);
 
-  int charWrittenToTrigger = fprintf(LEDMiddle2Trigger, "none");
-  if (charWrittenToTrigger <= 0)
-  {
-    printf("Error turning off trigger for LED middle 2");
-    exit(1);
-  }
+  // LEDMiddle2Trigger = fopen(LED_MIDDLE_2_TRIGGER_FILE, "w");
+  // int charWrittenToTrigger = fprintf(LEDMiddle2Trigger, "none");
+  // if (charWrittenToTrigger <= 0)
+  // {
+  //   printf("Error turning off trigger for LED middle 2");
+  //   exit(1);
+  // }
+  // fclose(LEDMiddle2Trigger);
 }
 
 void turnOnLED(Direction direction)
@@ -158,6 +174,7 @@ void turnOnLED(Direction direction)
 
 void turnOffLEDUp(void)
 {
+  LEDUpBrightness = fopen(LED_UP_BRIGHTNESS_FILE, "w");
   int charWritten = fprintf(LEDUpBrightness, "0");
   if (charWritten <= 0)
   {
@@ -166,8 +183,10 @@ void turnOffLEDUp(void)
   }
   fclose(LEDUpBrightness);
 }
+
 void turnOffLEDDown(void)
 {
+  LEDDownBrightness = fopen(LED_DOWN_BRIGHTNESS_FILE, "w");
   int charWritten = fprintf(LEDDownBrightness, "0");
   if (charWritten <= 0)
   {
@@ -179,6 +198,7 @@ void turnOffLEDDown(void)
 
 void turnOffLEDMiddle1(void)
 {
+  LEDMiddle1Brightness = fopen(LED_MIDDLE_1_BRIGHTNESS_FILE, "w");
   int charWritten = fprintf(LEDMiddle1Brightness, "0");
   if (charWritten <= 0)
   {
@@ -190,6 +210,7 @@ void turnOffLEDMiddle1(void)
 
 void turnOffLEDMiddle2(void)
 {
+  LEDMiddle2Brightness = fopen(LED_MIDDLE_2_BRIGHTNESS_FILE, "w");
   int charWritten = fprintf(LEDMiddle2Brightness, "0");
   if (charWritten <= 0)
   {
