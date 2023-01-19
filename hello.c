@@ -22,16 +22,16 @@ void intro(void)
   printf("\n");
 }
 
-// static long long getTimeInMs(void)
-// {
-//   struct timespec spec;
-//   clock_gettime(CLOCK_REALTIME, &spec);
-//   long long seconds = spec.tv_sec;
-//   long long nanoSeconds = spec.tv_nsec;
-//   long long milliSeconds = seconds * 1000 + nanoSeconds / 1000000;
+static long long getTimeInMs(void)
+{
+  struct timespec spec;
+  clock_gettime(CLOCK_REALTIME, &spec);
+  long long seconds = spec.tv_sec;
+  long long nanoSeconds = spec.tv_nsec;
+  long long milliSeconds = seconds * 1000 + nanoSeconds / 1000000;
 
-//   return milliSeconds;
-// }
+  return milliSeconds;
+}
 
 static void sleepForMs(long long delayInMs)
 {
@@ -83,23 +83,30 @@ static int getRandomTimeInMs()
 int main()
 {
   srand(time(NULL));
-  //  1. Print a “get ready” message and turn on the middle two LEDs on BBG.
   intro();
-  turnOffAllLEDs();
-  printf("Get ready!\n");
-  sleepForMs(getRandomTimeInMs());
-  int direction = getRandomDirectionUpOrDown();
-  turnOnLED(direction);
-  if (direction == UP)
+
+  while (1)
   {
-    printf("Press UP now!\n");
+    turnOffAllLEDs();
+    printf("Get ready!\n");
+    turnOnLEDMiddle1();
+    turnOnLEDMiddle2();
+
+    sleepForMs(getRandomTimeInMs());
+    turnOffAllLEDs();
+    turnOnRandomLEDUpOrDown();
+
+    long long startTime = getTimeInMs();
+
+    do
+    {
+
+    } while (getTimeInMs() - startTime <= 5000);
+
+    printf("Thanks for playing!\n");
+    turnOffAllLEDs();
+    return 0;
   }
-  else
-  {
-    printf("Press DOWN now!\n");
-  }
-  sleepForMs(1000);
-  turnOffAllLEDs();
 
   return 0;
 }

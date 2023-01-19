@@ -168,6 +168,20 @@ void turnOnLED(Direction direction)
   }
 }
 
+void turnOnRandomLEDUpOrDown(void)
+{
+  int direction = getRandomDirectionUpOrDown();
+  turnOnLED(direction);
+  if (direction == UP)
+  {
+    printf("Press UP now!\n");
+  }
+  else
+  {
+    printf("Press DOWN now!\n");
+  }
+}
+
 void turnOffLEDUp(void)
 {
   LEDUpBrightness = fopen(LED_UP_BRIGHTNESS_FILE, "w");
