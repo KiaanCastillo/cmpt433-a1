@@ -151,6 +151,7 @@ void turnOnLED(Direction direction)
   switch (direction)
   {
   case UP:
+    printf("Press UP now!\n");
     turnOnLEDUp();
     break;
   case MIDDLE_1:
@@ -160,6 +161,7 @@ void turnOnLED(Direction direction)
     turnOnLEDMiddle2();
     break;
   case DOWN:
+    printf("Press DOWN now!\n");
     turnOnLEDDown();
     break;
   default:
