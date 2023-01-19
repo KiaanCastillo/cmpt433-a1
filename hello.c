@@ -46,6 +46,14 @@ static void sleepForMs(long long delayInMs)
   nanosleep(&reqDelay, (struct timespec *)NULL);
 }
 
+static int getRandomTimeInMs() {
+  int minInMs = 500;  // 0.5s
+  int maxInMs = 3000; // 3s
+  int denominator = (maxInMs + 1 - minInMs);
+
+  return rand() % denominator + minInMs;
+}
+
 // static void runCommand(char *command)
 // {
 //   // Execute the shell command (output into pipe)
@@ -77,10 +85,8 @@ int main()
   intro();
   initializeAllLEDs();
   turnOffAllLEDs();
-  sleepForMs(2000);
-  printf("Initializing game...\n");
-  printf("Okay get ready!\n");
-  sleepForMs(3000);
+  printf("Get ready!\n");
+  sleepForMs(getRandomTimeInMs());
   initializeAllLEDs();
   int direction = getRandomDirectionUpOrDown();
   turnOnLED(direction);
@@ -92,10 +98,8 @@ int main()
   {
     printf("Press DOWN now!\n");
   }
-  sleepForMs(3000);
-  turnOffLEDUp();
-  turnOffLEDDown();
-  sleepForMs(3000);
+  initializeAllLEDs();
+  turnOffAllLEDs();
 
   return 0;
 }
