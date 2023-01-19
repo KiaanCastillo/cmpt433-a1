@@ -7,6 +7,8 @@
 #include "led.h"
 #include "joystick.h"
 
+#define MAX_RESPONSE_TIME 5000
+
 void intro(void)
 {
   printf("CMPT 433 | Kiaan Castillo | Assignment 1\n");
@@ -32,6 +34,7 @@ int main()
 {
   srand(time(NULL));
   intro();
+  int fastestTime = 0;
 
   while (1)
   {
@@ -53,7 +56,23 @@ int main()
       if ((isJoystickUpPressed() && direction == UP) || (isJoystickDownPressed() && direction == DOWN))
       {
         long long responseTime = getTimeInMs() - startTime;
+
+        if (fastestTime == 0) {
+          fastestTime = responseTime;
+        } else if (fastestTime > responseTime) {
+          fastestTime = responseTime;
+          printf("NEW RECORD! ");
+        }
+
         printf("Response time: %lldms\n", responseTime);
+        printf("\n"); 
+
+        break;
+      }
+
+      if ((isJoystickUpPressed() && direction != UP) || (isJoystickDownPressed() && direction != DOWN))
+      {
+        printf("Whoops, incorrect.\n");
         printf("\n"); 
         break;
       }
@@ -63,9 +82,9 @@ int main()
         endGame();
         return 0;
       }
-    } while (getTimeInMs() - startTime <= 5000);
+    } while (getTimeInMs() - startTime <= MAX_RESPONSE_TIME);
 
-    if (getTimeInMs() - startTime > 5000) {
+    if (getTimeInMs() - startTime > MAX_RESPONSE_TIME) {
       endGame();
       return 0;
     }
