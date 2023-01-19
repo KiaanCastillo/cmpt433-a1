@@ -3,9 +3,16 @@
 #include "led.h"
 
 static FILE *LEDUpBrightness;
+static FILE *LEDUpTrigger;
+
 static FILE *LEDDownBrightness;
+static FILE *LEDDownTrigger;
+
 static FILE *LEDMiddle1Brightness;
+static FILE *LEDMiddle1Trigger;
+
 static FILE *LEDMiddle2Brightness;
+static FILE *LEDMiddle2Trigger;
 
 void initializeAllLEDs(void);
 void toggleLED(FILE *LED);
@@ -29,17 +36,47 @@ void initializeAllLEDs(void)
 
   if (LEDUpBrightness == NULL || LEDDownBrightness == NULL || LEDMiddle1Brightness == NULL || LEDMiddle2Brightness == NULL)
   {
-    printf("Error initializing LEDs\n");
+    printf("Error initializing LED brightness files \n");
+    exit(1);
+  }
+
+  LEDUpTrigger = fopen(LED_UP_TRIGGER_FILE, "w");
+  LEDDownTrigger = fopen(LED_DOWN_TRIGGER_FILE, "w");
+  LEDMiddle1Trigger = fopen(LED_MIDDLE_1_TRIGGER_FILE, "w");
+  LEDMiddle2Trigger = fopen(LED_MIDDLE_2_TRIGGER_FILE, "w");
+
+  if (LEDUpTrigger == NULL || LEDDownTrigger == NULL || LEDMiddle1Trigger == NULL || LEDMiddle2Trigger == NULL)
+  {
+    printf("Error initializing LED trigger files \n");
     exit(1);
   }
 }
 
+Direction getRandomDirectionUpOrDown(void)
+{
+  int direction = rand() / RAND_MAX;
+  printf("%d\n", direction);
+  if (direction == UP)
+  {
+    return UP;
+  }
+  return DOWN;
+}
+
 void turnOnLEDUp(void)
 {
-  int charWritten = fprintf(LEDUpBrightness, "1");
-  if (charWritten <= 0)
+  int charWrittenToBrightness = fprintf(LEDUpBrightness, "1");
+  if (charWrittenToBrightness <= 0)
   {
-    printf("Error turning on LED up");
+    printf("Error turning on brightness for LED up");
+    exit(1);
+  }
+  fclose(LEDUpBrightness);
+
+  int charWrittenToTrigger = fprintf(LEDUpTrigger, "none");
+  if (charWrittenToTrigger <= 0)
+  {
+    printf("Error turning off trigger for LED up");
     exit(1);
   }
 }
@@ -52,6 +89,14 @@ void turnOnLEDDown(void)
     printf("Error turning on LED down");
     exit(1);
   }
+  fclose(LEDDownBrightness);
+
+  int charWrittenToTrigger = fprintf(LEDDownTrigger, "none");
+  if (charWrittenToTrigger <= 0)
+  {
+    printf("Error turning off trigger for LED down");
+    exit(1);
+  }
 }
 
 void turnOnLEDMiddle1(void)
@@ -62,6 +107,14 @@ void turnOnLEDMiddle1(void)
     printf("Error turning on LED middle 1");
     exit(1);
   }
+  fclose(LEDMiddle1Brightness);
+
+  int charWrittenToTrigger = fprintf(LEDMiddle1Trigger, "none");
+  if (charWrittenToTrigger <= 0)
+  {
+    printf("Error turning off trigger for LED middle 1");
+    exit(1);
+  }
 }
 
 void turnOnLEDMiddle2(void)
@@ -70,6 +123,14 @@ void turnOnLEDMiddle2(void)
   if (charWritten <= 0)
   {
     printf("Error turning on LED middle 2");
+    exit(1);
+  }
+  fclose(LEDMiddle2Brightness);
+
+  int charWrittenToTrigger = fprintf(LEDMiddle2Trigger, "none");
+  if (charWrittenToTrigger <= 0)
+  {
+    printf("Error turning off trigger for LED middle 2");
     exit(1);
   }
 }
@@ -103,6 +164,7 @@ void turnOffLEDUp(void)
     printf("Error turning off LED up");
     exit(1);
   }
+  fclose(LEDUpBrightness);
 }
 void turnOffLEDDown(void)
 {
@@ -112,6 +174,7 @@ void turnOffLEDDown(void)
     printf("Error turning off LED down");
     exit(1);
   }
+  fclose(LEDDownBrightness);
 }
 
 void turnOffLEDMiddle1(void)
@@ -122,6 +185,7 @@ void turnOffLEDMiddle1(void)
     printf("Error turning off LED middle 1");
     exit(1);
   }
+  fclose(LEDMiddle1Brightness);
 }
 
 void turnOffLEDMiddle2(void)
@@ -132,6 +196,7 @@ void turnOffLEDMiddle2(void)
     printf("Error turning off LED middle 2");
     exit(1);
   }
+  fclose(LEDMiddle2Brightness);
 }
 
 void turnOffAllLEDs(void)
