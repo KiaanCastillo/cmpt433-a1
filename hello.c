@@ -82,6 +82,7 @@ static int getRandomTimeInMs()
 
 int main()
 {
+  srand(time(NULL));
   //  1. Print a “get ready” message and turn on the middle two LEDs on BBG.
   intro();
   turnOffAllLEDs();
@@ -97,7 +98,7 @@ int main()
   {
     printf("Press DOWN now!\n");
   }
-  sleepForMs(2500);
+  sleepForMs(1000);
   turnOffAllLEDs();
 
   return 0;

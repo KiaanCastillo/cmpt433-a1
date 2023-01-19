@@ -54,12 +54,8 @@ void initializeAllLEDs(void)
 
 Direction getRandomDirectionUpOrDown(void)
 {
-  int min = 0;
-  int max = 1;
-  int denominator = (max + 1 - min);
-  int direction = rand() % denominator;
+  int direction = rand() % 2;
 
-  printf("%d\n", direction);
   if (direction == UP)
   {
     return UP;
