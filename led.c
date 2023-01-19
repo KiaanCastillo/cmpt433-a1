@@ -15,7 +15,6 @@ static FILE *LEDMiddle2Brightness;
 static FILE *LEDMiddle2Trigger;
 
 void initializeAllLEDs(void);
-void toggleLED(FILE *LED);
 
 void turnOnLEDUp(void);
 void turnOnLEDDown(void);

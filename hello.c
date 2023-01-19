@@ -2,6 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 
+#include "helpers.h"
 #include "led.h"
 
 // #define JOYSTICK_UP_GPIO_DIRECTORY_PATH "/sys/class/gpio/gpio26/value"
@@ -20,39 +21,6 @@ void intro(void)
   printf("Good luck and have fun!\n");
   printf("----------------------------------------\n");
   printf("\n");
-}
-
-static long long getTimeInMs(void)
-{
-  struct timespec spec;
-  clock_gettime(CLOCK_REALTIME, &spec);
-  long long seconds = spec.tv_sec;
-  long long nanoSeconds = spec.tv_nsec;
-  long long milliSeconds = seconds * 1000 + nanoSeconds / 1000000;
-
-  return milliSeconds;
-}
-
-static void sleepForMs(long long delayInMs)
-{
-  const long long NS_PER_MS = 1000 * 1000;
-  const long long NS_PER_SECOND = 1000000000;
-
-  long long delayNs = delayInMs * NS_PER_MS;
-  int seconds = delayNs / NS_PER_SECOND;
-  int nanoseconds = delayNs % NS_PER_SECOND;
-
-  struct timespec reqDelay = {seconds, nanoseconds};
-  nanosleep(&reqDelay, (struct timespec *)NULL);
-}
-
-static int getRandomTimeInMs()
-{
-  int minInMs = 500;  // 0.5s
-  int maxInMs = 3000; // 3s
-  int denominator = (maxInMs + 1 - minInMs);
-
-  return rand() % denominator + minInMs;
 }
 
 // static void runCommand(char *command)
