@@ -27,15 +27,72 @@ bool isJoystickUpPressed(void)
     return false;
   }
 }
+
 bool isJoystickDownPressed(void)
 {
-  return true;
+  FILE *joyStickDownValue = fopen(JOYSTICK_DOWN_VALUE, "r");
+  if (joyStickDownValue == NULL)
+  {
+    printf("Error reading joy stick up value\n");
+    exit(-1);
+  }
+
+  char value[FILE_READ_BUFFER_MAX_LENGTH];
+  fgets(value, FILE_READ_BUFFER_MAX_LENGTH, joyStickDownValue);
+  fclose(joyStickDownValue);
+
+  if (atoi(value) == 0)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }
+
 bool isJoystickLeftPressed(void)
 {
-  return true;
+  FILE *joyStickLeftValue = fopen(JOYSTICK_LEFT_VALUE, "r");
+  if (joyStickLeftValue == NULL)
+  {
+    printf("Error reading joy stick up value\n");
+    exit(-1);
+  }
+
+  char value[FILE_READ_BUFFER_MAX_LENGTH];
+  fgets(value, FILE_READ_BUFFER_MAX_LENGTH, joyStickLeftValue);
+  fclose(joyStickLeftValue);
+
+  if (atoi(value) == 0)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }
+
 bool isJoystickRightPressed(void)
 {
-  return true;
+  FILE *joyStickRightValue = fopen(JOYSTICK_RIGHT_VALUE, "r");
+  if (joyStickRightValue == NULL)
+  {
+    printf("Error reading joy stick up value\n");
+    exit(-1);
+  }
+
+  char value[FILE_READ_BUFFER_MAX_LENGTH];
+  fgets(value, FILE_READ_BUFFER_MAX_LENGTH, joyStickRightValue);
+  fclose(joyStickRightValue);
+
+  if (atoi(value) == 0)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
 }

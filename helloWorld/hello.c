@@ -20,6 +20,14 @@ void intro(void)
   printf("\n");
 }
 
+void endGame(void)
+{
+  printf("\n");
+  printf("----------------------------------------\n");
+  printf("Thanks for playing! See you next time.\n");
+  turnOffAllLEDs();
+}
+
 int main()
 {
   srand(time(NULL));
@@ -42,22 +50,25 @@ int main()
 
     do
     {
-      printf("%d\n", isJoystickUpPressed());
       if ((isJoystickUpPressed() && direction == UP) || (isJoystickDownPressed() && direction == DOWN))
       {
-        printf("Good job!\n");
+        long long responseTime = getTimeInMs() - startTime;
+        printf("Response time: %lldms\n", responseTime);
+        printf("\n"); 
         break;
       }
-      else if (isJoystickLeftPressed() || isJoystickRightPressed())
+
+      if (isJoystickLeftPressed() || isJoystickRightPressed())
       {
-        printf("Thanks for playing!\n");
+        endGame();
         return 0;
       }
     } while (getTimeInMs() - startTime <= 5000);
 
-    printf("No response. Thanks for playing!\n");
-    turnOffAllLEDs();
-    return 0;
+    if (getTimeInMs() - startTime > 5000) {
+      endGame();
+      return 0;
+    }
   }
 
   return 0;
