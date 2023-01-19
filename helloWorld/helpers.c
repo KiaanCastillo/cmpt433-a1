@@ -36,10 +36,10 @@ int getRandomTimeInMs(void)
   return rand() % denominator + minInMs;
 }
 
-void runCommand(char *command)
+void runCommand(char* command)
 {
   // Execute the shell command (output into pipe)
-  FILE *pipe = fopen(command, "r");
+  FILE *pipe = popen(command, "r");
 
   // Ignore output of the command; but consume it
   // so we don't get an error when closing the pipe.
@@ -48,7 +48,7 @@ void runCommand(char *command)
   {
     if (fgets(buffer, sizeof(buffer), pipe) == NULL)
       break;
-    printf("--> %s", buffer); // Uncomment for debugging
+    // printf("--> %s", buffer); // Uncomment for debugging
   }
 
   // Get the exit code from the pipe; non-zero is an error:

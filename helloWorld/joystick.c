@@ -15,11 +15,46 @@ void runConfigPinOnAll(void) {
 
 
 void configureAllPinInputs(void) {
-  
+  FILE *joystickUpInput = fopen(JOYSTICK_UP_VALUE, "w");
+  FILE *joystickDownInput = fopen(JOYSTICK_DOWN_VALUE, "w");
+  FILE *joystickLeftInput = fopen(JOYSTICK_LEFT_VALUE, "w");
+  FILE *joystickRightInput = fopen(JOYSTICK_RIGHT_VALUE, "w");
+
+  if (joystickUpInput == NULL || joystickDownInput == NULL || joystickLeftInput == NULL || joystickRightInput == NULL)
+  {
+    printf("Error opening joystick input files \n");
+    exit(1);
+  }
+
+  int numJoysticks = 4;
+  for (int i = 0; i < numJoysticks; i++) {
+
+    int charWrittenToJoystick = fprintf(joystickUpInput, "in");
+    if (i == 1) {
+      charWrittenToJoystick = fprintf(joystickDownInput, "in");
+    } else if (i == 2) {
+      charWrittenToJoystick = fprintf(joystickLeftInput, "in");
+    } else if (i == 3) {
+      charWrittenToJoystick = fprintf(joystickRightInput, "in");
+    }
+
+    if (charWrittenToJoystick <= 0) {
+      printf("Error setting joystick input to in");
+      exit(1);
+    }
+  }
+
+  fclose(joystickUpInput);
+  fclose(joystickDownInput);
+  fclose(joystickLeftInput);
+  fclose(joystickRightInput);
 }
 
 
-void initializeAllPins(void);
+void initializeAllPins(void) {
+  runConfigPinOnAll();
+  configureAllPinInputs();
+}
 
 bool isJoystickUpPressed(void)
 {

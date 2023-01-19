@@ -7,7 +7,7 @@
 #include "led.h"
 #include "joystick.h"
 
-#define MAX_RESPONSE_TIME 5000
+#define MAX_RESPONSE_TIME_IN_MS 5000
 
 void intro(void)
 {
@@ -22,6 +22,20 @@ void intro(void)
   printf("\n");
 }
 
+void initializeGame(void) {
+  srand(time(NULL));
+  intro();
+  setAllLEDTriggersToNone();
+  initializeAllPins();
+}
+
+void initializeRound(void) {
+  turnOffAllLEDs();
+  printf("Get ready!\n");
+  turnOnLEDMiddle1();
+  turnOnLEDMiddle2();
+}
+
 void endGame(void)
 {
   printf("\n");
@@ -32,17 +46,12 @@ void endGame(void)
 
 int main()
 {
-  srand(time(NULL));
-  intro();
-  setAllLEDTriggersToNone();
   int fastestTime = 0;
+  initializeGame();
 
   while (1)
   {
-    turnOffAllLEDs();
-    printf("Get ready!\n");
-    turnOnLEDMiddle1();
-    turnOnLEDMiddle2();
+    initializeRound();
 
     sleepForMs(getRandomTimeInMs());
     turnOffAllLEDs();
@@ -83,9 +92,9 @@ int main()
         endGame();
         return 0;
       }
-    } while (getTimeInMs() - startTime <= MAX_RESPONSE_TIME);
+    } while (getTimeInMs() - startTime <= MAX_RESPONSE_TIME_IN_MS);
 
-    if (getTimeInMs() - startTime > MAX_RESPONSE_TIME) {
+    if (getTimeInMs() - startTime > MAX_RESPONSE_TIME_IN_MS) {
       endGame();
       return 0;
     }
