@@ -42,8 +42,8 @@ void initializeRound(void)
 
 bool playerPressedTooEarly(void)
 {
-  int waitTimeBeforeRoundStart = getRandomTimeInMs();
-  int roundStartTime = getTimeInMs();
+  long long waitTimeBeforeRoundStart = getRandomTimeInMs();
+  long long roundStartTime = getTimeInMs();
   bool pressedTooEarly = false;
 
   do
