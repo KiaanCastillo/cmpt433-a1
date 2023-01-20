@@ -36,7 +36,7 @@ int getRandomTimeInMs(void)
   return rand() % denominator + minInMs;
 }
 
-void runCommand(char* command)
+void runCommand(char *command)
 {
   // Execute the shell command (output into pipe)
   FILE *pipe = popen(command, "r");

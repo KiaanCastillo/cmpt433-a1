@@ -6,15 +6,16 @@
 #include "helpers.h"
 #include "joystick.h"
 
-void runConfigPinOnAll(void) {
+void runConfigPinOnAll(void)
+{
   runCommand(JOYSTICK_UP_CONFIG_PIN);
   runCommand(JOYSTICK_DOWN_CONFIG_PIN);
   runCommand(JOYSTICK_LEFT_CONFIG_PIN);
   runCommand(JOYSTICK_RIGHT_CONFIG_PIN);
 }
 
-
-void configureAllPinInputs(void) {
+void configureAllPinInputs(void)
+{
   FILE *joystickUpInput = fopen(JOYSTICK_UP_VALUE, "w");
   FILE *joystickDownInput = fopen(JOYSTICK_DOWN_VALUE, "w");
   FILE *joystickLeftInput = fopen(JOYSTICK_LEFT_VALUE, "w");
@@ -27,18 +28,25 @@ void configureAllPinInputs(void) {
   }
 
   int numJoysticks = 4;
-  for (int i = 0; i < numJoysticks; i++) {
+  for (int i = 0; i < numJoysticks; i++)
+  {
 
     int charWrittenToJoystick = fprintf(joystickUpInput, "in");
-    if (i == 1) {
+    if (i == 1)
+    {
       charWrittenToJoystick = fprintf(joystickDownInput, "in");
-    } else if (i == 2) {
+    }
+    else if (i == 2)
+    {
       charWrittenToJoystick = fprintf(joystickLeftInput, "in");
-    } else if (i == 3) {
+    }
+    else if (i == 3)
+    {
       charWrittenToJoystick = fprintf(joystickRightInput, "in");
     }
 
-    if (charWrittenToJoystick <= 0) {
+    if (charWrittenToJoystick <= 0)
+    {
       printf("Error setting joystick input to in");
       exit(1);
     }
@@ -50,8 +58,8 @@ void configureAllPinInputs(void) {
   fclose(joystickRightInput);
 }
 
-
-void initializeAllPins(void) {
+void initializeAllPins(void)
+{
   runConfigPinOnAll();
   configureAllPinInputs();
 }

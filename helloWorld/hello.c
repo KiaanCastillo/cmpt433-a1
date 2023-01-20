@@ -8,6 +8,8 @@
 #include "joystick.h"
 
 #define MAX_RESPONSE_TIME_IN_MS 5000
+#define CORRECT_ANSWER_LED_FLASH_DURATION_MS 500
+#define INCORRECT_ANSWER_LED_FLASH_DURATION_MS 1000
 
 void intro(void)
 {
@@ -22,14 +24,17 @@ void intro(void)
   printf("\n");
 }
 
-void initializeGame(void) {
+void initializeGame(void)
+{
   srand(time(NULL));
   intro();
   setAllLEDTriggersToNone();
   initializeAllPins();
 }
 
-void initializeRound(void) {
+void initializeRound(void)
+{
+  setAllLEDTriggersToNone();
   turnOffAllLEDs();
   printf("Get ready!\n");
   turnOnLEDMiddle1();
@@ -53,8 +58,25 @@ int main()
   {
     initializeRound();
 
-    sleepForMs(getRandomTimeInMs());
     turnOffAllLEDs();
+    int waitTimeBeforeRoundStart = getRandomTimeInMs();
+    int roundStartTime = getTimeInMs();
+    bool pressedTooEarly = false;
+    do
+    {
+      if (isJoystickUpPressed() || isJoystickDownPressed())
+      {
+        printf("Too soon!\n");
+        printf("\n");
+        pressedTooEarly = true;
+        break;
+      }
+    } while (getTimeInMs() - roundStartTime < waitTimeBeforeRoundStart);
+
+    if (pressedTooEarly)
+    {
+      continue;
+    }
 
     Direction direction = getRandomDirectionUpOrDown();
     turnOnLED(direction);
@@ -67,15 +89,20 @@ int main()
       {
         long long responseTime = getTimeInMs() - startTime;
 
-        if (fastestTime == 0) {
+        if (fastestTime == 0)
+        {
           fastestTime = responseTime;
-        } else if (fastestTime > responseTime) {
+        }
+        else if (fastestTime > responseTime)
+        {
           fastestTime = responseTime;
           printf("NEW RECORD! ");
         }
 
         printf("Response time: %lldms\n", responseTime);
-        printf("\n"); 
+        printf("\n");
+        correctAnswerLEDFlash();
+        sleepForMs(CORRECT_ANSWER_LED_FLASH_DURATION_MS);
 
         break;
       }
@@ -83,7 +110,10 @@ int main()
       if ((isJoystickUpPressed() && direction != UP) || (isJoystickDownPressed() && direction != DOWN))
       {
         printf("Whoops, incorrect.\n");
-        printf("\n"); 
+        printf("\n");
+        incorrectAnswerLEDFlash();
+        sleepForMs(INCORRECT_ANSWER_LED_FLASH_DURATION_MS);
+
         break;
       }
 
@@ -94,7 +124,8 @@ int main()
       }
     } while (getTimeInMs() - startTime <= MAX_RESPONSE_TIME_IN_MS);
 
-    if (getTimeInMs() - startTime > MAX_RESPONSE_TIME_IN_MS) {
+    if (getTimeInMs() - startTime > MAX_RESPONSE_TIME_IN_MS)
+    {
       endGame();
       return 0;
     }
