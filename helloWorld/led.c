@@ -3,12 +3,14 @@
 #include "led.h"
 #include "helpers.h"
 
-void setAllLEDTriggersTo(char *value)
+void setAllLEDTriggersToNone()
 {
   FILE *LEDUpTrigger = fopen(LED_UP_TRIGGER_FILE, "w");
   FILE *LEDDownTrigger = fopen(LED_DOWN_TRIGGER_FILE, "w");
   FILE *LEDMiddle1Trigger = fopen(LED_MIDDLE_1_TRIGGER_FILE, "w");
   FILE *LEDMiddle2Trigger = fopen(LED_MIDDLE_2_TRIGGER_FILE, "w");
+
+  char *value = "none";
 
   if (LEDUpTrigger == NULL || LEDDownTrigger == NULL || LEDMiddle1Trigger == NULL || LEDMiddle2Trigger == NULL)
   {
@@ -48,11 +50,6 @@ void setAllLEDTriggersTo(char *value)
   fclose(LEDMiddle1Trigger);
   fclose(LEDMiddle2Trigger);
   fclose(LEDDownTrigger);
-}
-
-void setAllLEDTriggersToNone(void)
-{
-  setAllLEDTriggersTo("none");
 }
 
 Direction getRandomDirectionUpOrDown(void)
@@ -199,98 +196,6 @@ void turnOffAllLEDs(void)
   turnOffLEDDown();
   turnOffLEDMiddle1();
   turnOffLEDMiddle2();
-}
-
-void setAllLEDDelayOnTo(char *value)
-{
-  FILE *LEDUpDelayOn = fopen(LED_UP_DELAY_ON_FILE, "w");
-  FILE *LEDDownDelayOn = fopen(LED_DOWN_DELAY_ON_FILE, "w");
-  FILE *LEDMiddle1DelayOn = fopen(LED_MIDDLE_1_DELAY_ON_FILE, "w");
-  FILE *LEDMiddle2DelayOn = fopen(LED_MIDDLE_2_DELAY_ON_FILE, "w");
-
-  if (LEDUpDelayOn == NULL || LEDDownDelayOn == NULL || LEDMiddle1DelayOn == NULL || LEDMiddle2DelayOn == NULL)
-  {
-    printf("Error opening LED delay on files\n");
-    exit(1);
-  }
-
-  for (int i = 0; i < NUM_LEDS; i++)
-  {
-    int charWritten;
-    if (i == UP)
-    {
-      charWritten = fprintf(LEDUpDelayOn, value);
-    }
-    if (i == MIDDLE_1)
-    {
-      charWritten = fprintf(LEDMiddle1DelayOn, value);
-    }
-    else if (i == MIDDLE_2)
-    {
-      charWritten = fprintf(LEDMiddle2DelayOn, value);
-    }
-    else if (i == DOWN)
-    {
-      charWritten = fprintf(LEDDownDelayOn, value);
-    }
-
-    if (charWritten <= 0)
-    {
-      printf("Error setting LED delay on to %s", value);
-      exit(1);
-    }
-  }
-
-  fclose(LEDUpDelayOn);
-  fclose(LEDMiddle1DelayOn);
-  fclose(LEDMiddle2DelayOn);
-  fclose(LEDDownDelayOn);
-}
-
-void setAllLEDDelayOffTo(char *value)
-{
-  FILE *LEDUpDelayOff = fopen(LED_UP_DELAY_OFF_FILE, "w");
-  FILE *LEDDownDelayOff = fopen(LED_DOWN_DELAY_OFF_FILE, "w");
-  FILE *LEDMiddle1DelayOff = fopen(LED_MIDDLE_1_DELAY_OFF_FILE, "w");
-  FILE *LEDMiddle2DelayOff = fopen(LED_MIDDLE_2_DELAY_OFF_FILE, "w");
-
-  if (LEDUpDelayOff == NULL || LEDDownDelayOff == NULL || LEDMiddle1DelayOff == NULL || LEDMiddle2DelayOff == NULL)
-  {
-    printf("Error opening LED delay off files\n");
-    exit(1);
-  }
-
-  for (int i = 0; i < NUM_LEDS; i++)
-  {
-    int charWritten;
-    if (i == UP)
-    {
-      charWritten = fprintf(LEDUpDelayOff, value);
-    }
-    if (i == MIDDLE_1)
-    {
-      charWritten = fprintf(LEDMiddle1DelayOff, value);
-    }
-    else if (i == MIDDLE_2)
-    {
-      charWritten = fprintf(LEDMiddle2DelayOff, value);
-    }
-    else if (i == DOWN)
-    {
-      charWritten = fprintf(LEDDownDelayOff, value);
-    }
-
-    if (charWritten <= 0)
-    {
-      printf("Error setting LED delay off to %s", value);
-      exit(1);
-    }
-  }
-
-  fclose(LEDUpDelayOff);
-  fclose(LEDMiddle1DelayOff);
-  fclose(LEDMiddle2DelayOff);
-  fclose(LEDDownDelayOff);
 }
 
 void LEDFlash(int numFlashes, int delayInMs)

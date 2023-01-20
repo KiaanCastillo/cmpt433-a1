@@ -119,4 +119,5 @@ void endGame(void)
   printf("----------------------------------------\n");
   printf("Thanks for playing! See you next time.\n");
   turnOffAllLEDs();
+  setAllLEDTriggersToNone();
 }
