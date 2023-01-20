@@ -294,7 +294,8 @@ void setAllLEDDelayOffTo(char *value)
 
 void correctAnswerLEDFlash(void)
 {
-  setAllLEDTriggersTo("timer");
+
+  // setAllLEDTriggersTo("timer");
   // setAllLEDDelayOnTo("25");
   // setAllLEDDelayOffTo("900");
 }

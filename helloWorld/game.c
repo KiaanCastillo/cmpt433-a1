@@ -82,7 +82,8 @@ ROUND_RESULT startRound(void)
         printf("NEW RECORD! ");
       }
 
-      printf("Response time: %lldms\n", responseTime);
+      printf("Good job!\n");
+      printf("Response time: %lldms | Fastest so far: %dms\n", responseTime, fastestTime);
       printf("\n");
       correctAnswerLEDFlash();
       sleepForMs(CORRECT_ANSWER_LED_FLASH_DURATION_MS);
