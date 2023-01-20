@@ -86,7 +86,6 @@ ROUND_RESULT startRound(void)
       printf("Response time: %lldms | Fastest so far: %dms\n", responseTime, fastestTime);
       printf("\n");
       correctAnswerLEDFlash();
-      sleepForMs(CORRECT_ANSWER_LED_FLASH_DURATION_MS);
 
       break;
     }
@@ -96,7 +95,6 @@ ROUND_RESULT startRound(void)
       printf("Whoops, incorrect.\n");
       printf("\n");
       incorrectAnswerLEDFlash();
-      sleepForMs(INCORRECT_ANSWER_LED_FLASH_DURATION_MS);
 
       break;
     }

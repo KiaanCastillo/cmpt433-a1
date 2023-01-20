@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "led.h"
+#include "helpers.h"
 
 void setAllLEDTriggersTo(char *value)
 {
@@ -292,17 +293,23 @@ void setAllLEDDelayOffTo(char *value)
   fclose(LEDDownDelayOff);
 }
 
+void LEDFlash(int numFlashes, int delayInMs)
+{
+  for (int i = 0; i < numFlashes; i++)
+  {
+    turnOnAllLEDs();
+    sleepForMs(delayInMs);
+    turnOffAllLEDs();
+    sleepForMs(delayInMs);
+  }
+}
+
 void correctAnswerLEDFlash(void)
 {
-
-  // setAllLEDTriggersTo("timer");
-  // setAllLEDDelayOnTo("25");
-  // setAllLEDDelayOffTo("900");
+  LEDFlash(4, 75);
 }
 
 void incorrectAnswerLEDFlash(void)
 {
-  setAllLEDTriggersTo("timer");
-  // setAllLEDDelayOnTo("10");
-  // setAllLEDDelayOffTo("100");
+  LEDFlash(10, 25);
 }
